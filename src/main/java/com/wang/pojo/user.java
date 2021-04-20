@@ -1,6 +1,7 @@
 package com.wang.pojo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author 王航
@@ -18,9 +19,9 @@ public class user {
     private String address;
     private Integer userRole;
     private Integer createBy;
-    private java.util.Date creationDate;
+    private Timestamp creationDate;
     private Integer modifyBy;
-    private java.util.Date modifyDate;
+    private Timestamp modifyDate;
 
     private Integer age;//年龄
     private String userRoleName;//用户角色名
@@ -28,7 +29,7 @@ public class user {
     public user() {
     }
 
-    public user(Integer id, String userCode, String userName, String userPassword, Integer gender, Date birthday, String phone, String address, Integer userRole, Integer createBy, Date creationDate, Integer modifyBy, Date modifyDate) {
+    public user(Integer id, String userCode, String userName, String userPassword, Integer gender, Timestamp birthday, String phone, String address, Integer userRole, Integer createBy, Timestamp creationDate, Integer modifyBy, Timestamp modifyDate) {
         this.id = id;
         this.userCode = userCode;
         this.userName = userName;
@@ -128,7 +129,7 @@ public class user {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -144,7 +145,7 @@ public class user {
         return modifyDate;
     }
 
-    public void setModifyDate(Date modifyDate) {
+    public void setModifyDate(Timestamp modifyDate) {
         this.modifyDate = modifyDate;
     }
 

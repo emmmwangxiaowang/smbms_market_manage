@@ -24,9 +24,9 @@ public class BaseDao {
 
     //静态代码块,类加载的时候就初始化了
     static {
+        Properties properties = new Properties();
         //通过类加载器读取对应的资源
         InputStream is = BaseDao.class.getClassLoader().getResourceAsStream("db.properties");
-        Properties properties = new Properties();
 
         try {
             properties.load(is);
@@ -45,7 +45,7 @@ public class BaseDao {
         Connection connection = null;
         try {
             Class.forName(driver);
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(url,username,password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,15 +53,17 @@ public class BaseDao {
     }
 
     //编写查询公共类
-    public static ResultSet execute(Connection connection, String sql, Object[] params, PreparedStatement preparedStatement) throws SQLException {
+    public static ResultSet execute(Connection connection, String sql, Object[] params,ResultSet resultSet , PreparedStatement preparedStatement) throws SQLException {
         //预编译的sql,再后面直接执行就可以了
         preparedStatement = connection.prepareStatement(sql);
         for (int i = 0; i < params.length; i++) {
             //setObject,占位符从1开始,但我们的数组是从0开始的
-            preparedStatement.setObject((i + 1), params[i]);
+            preparedStatement.setObject(i+1, params[i]);
         }
+       // preparedStatement.setObject(1, params[0]);
 
-        ResultSet resultSet = preparedStatement.executeQuery(sql);
+        //经过preparedStatement预处理后,sql语句已经设置,之后的查询等操作就不用再传入sql语句了
+         resultSet = preparedStatement.executeQuery();
         return resultSet;
 
     }
