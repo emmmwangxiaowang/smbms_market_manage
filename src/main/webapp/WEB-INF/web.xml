@@ -6,6 +6,15 @@
          metadata-complete="true"
 >
 
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.wang.servlet.user.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login.do</url-pattern>
+    </servlet-mapping>
+
     <!--字符编码过滤器-->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
