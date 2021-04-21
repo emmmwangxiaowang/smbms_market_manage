@@ -5,6 +5,7 @@ import com.wang.pojo.user;
 import com.wang.pojo.user;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author 王航
@@ -14,5 +15,8 @@ import java.sql.Connection;
 public interface UserDao {
 
     //得到要登录的用户
-    public user getLoginUser(Connection connection,String userCode);
+    public user getLoginUser(Connection connection,String userCode)throws SQLException;
+
+    //修改当前用户密码
+    public int updatePwd(Connection connection ,int id,String password)throws SQLException;
 }
