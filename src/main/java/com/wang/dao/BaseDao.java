@@ -76,7 +76,7 @@ public class BaseDao {
             preparedStatement.setObject((i + 1), params[i]);
         }
 
-        int updateRows = preparedStatement.executeUpdate(sql);
+        int updateRows = preparedStatement.executeUpdate();
         return updateRows;
 
     }

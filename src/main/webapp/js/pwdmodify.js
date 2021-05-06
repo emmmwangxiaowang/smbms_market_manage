@@ -18,7 +18,7 @@ $(function(){
 			type:"GET",
 			url:path+"/jsp/user.do",
 			data:{method:"pwdmodify",oldpassword:oldpassword.val()},//ajax传递的参数
-			dataType:"json",
+			dataType:"json",//主流开发都是使用JSON实现前后端
 			success:function(data){
 				if(data.result == "true"){//旧密码正确
 					validateTip(oldpassword.next(),{"color":"green"},imgYes,true);
@@ -70,8 +70,9 @@ $(function(){
 		newpassword.blur();
 		rnewpassword.blur();
 
-		/*oldpassword.attr("validateStatus") == "true"*/
-		if(newpassword.attr("validateStatus") == "true"
+
+		if(oldpassword.attr("validateStatus") == "true"&&
+			newpassword.attr("validateStatus") == "true"
 			&& rnewpassword.attr("validateStatus") == "true"){
 			if(confirm("确定要修改密码？")){
 				$("#userForm").submit();

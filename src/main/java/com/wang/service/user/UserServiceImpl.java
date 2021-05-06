@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author 王航
@@ -58,5 +59,47 @@ public class UserServiceImpl implements UserService {
         return flag;
     }
 
+    //查询记录数
+    public int getUserCount(String userName, int userRole) {
+
+        Connection connection=null;
+        int count=0;
+
+        try {
+            connection=BaseDao.getConnection();
+             count= userDao.getUserCount(connection, userName, userRole);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            BaseDao.closeResource(connection,null,null  );
+        }
+
+        return count;
+    }
+
+    //根据条件查询用户列表
+    public List<user> getUserList(String queryUserName, int queryUserRole, int currentPageNo, int pageSize) {
+        Connection connection = null;
+        List<user> userList = null;
+
+        try {
+            connection = BaseDao.getConnection();
+            userList = userDao.getUserList(connection, queryUserName, queryUserRole, currentPageNo, pageSize);
+        } catch (Exception throwables) {
+            throwables.printStackTrace();
+        } finally {
+            BaseDao.closeResource(connection, null, null);
+        }
+        return userList;
+    }
+
+
+
+    @Test
+    public void test(){
+        UserServiceImpl userService = new UserServiceImpl();
+        int userCount = userService.getUserCount(null, 2);
+        System.out.println(userCount);
+    }
 
 }

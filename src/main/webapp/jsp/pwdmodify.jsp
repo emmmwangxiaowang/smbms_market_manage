@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@include file="/jsp/common/head.jsp"%>
 <div class="right">
     <div class="location">
@@ -22,7 +22,7 @@
                 <font color="red"></font>
             </div>
             <div>
-                <label for="rnewpassword">确认新密码：</label>
+                <label for="newPassword">确认新密码：</label>
                 <input type="password" name="rnewpassword" id="rnewpassword" value="">
                 <font color="red"></font>
             </div>
@@ -33,6 +33,6 @@
         </form>
     </div>
 </div>
-    </section>
+</section>
 <%@include file="/jsp/common/foot.jsp" %>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/pwdmodify.js"></script>
