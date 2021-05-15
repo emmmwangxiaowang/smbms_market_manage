@@ -10,7 +10,7 @@ import java.sql.Date;
 public class role {
     private Integer id;
     private String roleCode;
-    private String rolName;
+    private String roleName;
     private Integer createBy;
     private java.util.Date createDate;
     private Integer modifyBy;
@@ -19,10 +19,10 @@ public class role {
     public role() {
     }
 
-    public role(Integer id, String roleCode, String rolName, Integer createBy, Date createDate, Integer modifyBy, Date modifyDate) {
+    public role(Integer id, String roleCode, String roleName, Integer createBy, Date createDate, Integer modifyBy, Date modifyDate) {
         this.id = id;
         this.roleCode = roleCode;
-        this.rolName = rolName;
+        this.roleName = roleName;
         this.createBy = createBy;
         this.createDate = createDate;
         this.modifyBy = modifyBy;
@@ -45,12 +45,12 @@ public class role {
         this.roleCode = roleCode;
     }
 
-    public String getRolName() {
-        return rolName;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRolName(String rolName) {
-        this.rolName = rolName;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public Integer getCreateBy() {
@@ -90,7 +90,7 @@ public class role {
         return "role{" +
                 "id=" + id +
                 ", roleCode='" + roleCode + '\'' +
-                ", rolName='" + rolName + '\'' +
+                ", rolName='" + roleName + '\'' +
                 ", createBy=" + createBy +
                 ", createDate=" + createDate +
                 ", modifyBy=" + modifyBy +

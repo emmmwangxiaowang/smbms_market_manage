@@ -4,6 +4,7 @@ import com.wang.pojo.user;
 
 import com.wang.pojo.user;
 
+import javax.management.relation.Role;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,4 +27,5 @@ public interface UserDao {
 
     //获取用户列表
     public List<user> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws Exception;
+
 }

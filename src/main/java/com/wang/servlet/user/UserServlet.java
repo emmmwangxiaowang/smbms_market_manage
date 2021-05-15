@@ -2,11 +2,16 @@ package com.wang.servlet.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.util.StringUtils;
+import com.wang.pojo.role;
 import com.wang.pojo.user;
+import com.wang.service.role.RoleService;
+import com.wang.service.role.RoleServiceImpl;
 import com.wang.service.user.UserService;
 import com.wang.service.user.UserServiceImpl;
 import com.wang.util.Constants;
+import com.wang.util.PageSupport;
 
+import javax.management.relation.Role;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author 王航
@@ -30,7 +37,9 @@ public class UserServlet extends HttpServlet {
            this.updatePwd(req,resp);
        }else if(method.equals("pwdmodify")&&method!=null){
             this.pwdModify(req,resp);
-        }
+       }else if(method.equals("query")&&method!=null){
+           this.query(req,resp);
+       }
     }
 
     @Override
@@ -108,5 +117,103 @@ public class UserServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    //重点、难点
+    private void query(HttpServletRequest req, HttpServletResponse resp) {
+        //从请求中获取参数
+        String queryName = req.getParameter("queryName");
+        String pageIndex = req.getParameter("pageIndex");
+
+        String temp = req.getParameter("queryUserRole");
+        int queryUserRole = 0; //初始化赋值,避免查询时出现异常
+
+        //页面大小
+        int pageSize = Constants.PAGE_SIZE;
+        //当前页码
+        int currentPageNo = 1;
+
+        //打印输出获取到的参数
+        System.out.println("queryName -------->"+queryName);
+        System.out.println("queryUserRole -------->"+queryUserRole);
+        System.out.println("pageIndex ---------> " + pageIndex);
+
+        //判断是否传入指定用户名
+        if(queryName == null){
+            //未传入则赋值为空字符串,避免查询报错
+            queryName = "";
+        }
+        //判断是否限定了用户角色条件
+        if(temp != null && !temp.equals("")){
+            queryUserRole = Integer.parseInt(temp);
+        }
+        //判断传入页码是否正确
+        if (pageIndex != null){
+            try {
+                currentPageNo = Integer.parseInt(pageIndex);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                try {
+                    resp.sendRedirect("error.jsp");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+
+        //获取符合条件的用户个数
+        UserService userService = new UserServiceImpl();
+        int totalCount = userService.getUserCount(queryName, queryUserRole);
+
+        //计算数据显示的总页数
+        PageSupport pageSupport = new PageSupport();
+        pageSupport.setCurrentPageNo(currentPageNo);
+        pageSupport.setPageSize(pageSize);
+        pageSupport.setTotalPageCount(totalCount);
+
+        int totalPageCount = totalCount/pageSize+1; //总页数
+
+        //控制首页和尾页
+        if(currentPageNo < 1){ //如果页码小于1,则显示第一页
+            currentPageNo = 1;
+        }else if(currentPageNo > totalPageCount){ //如果页码大于最大页码数.则显示最后一页
+            currentPageNo = totalPageCount;
+        }
+
+        //将查到的用户数据存到Attribute中
+        List<user> userList = userService.getUserList(queryName, queryUserRole, currentPageNo, pageSize);
+        Iterator<user> iterator = userList.iterator();
+        /*while (iterator.hasNext()){
+            user user = iterator.next();
+            System.out.println("用户:"+user);
+        }*/
+
+
+        //将查询到的角色数据存到Attribute中
+        RoleService roleService = new RoleServiceImpl();
+        List<role> roleList = roleService.getRoleList();
+        /*for(role role : roleList){
+            System.out.println("用户角色:"+role);
+        }*/
+
+        //将需要的参数存到Attribute中
+        req.setAttribute("userList", userList);
+        req.setAttribute("roleList", roleList);
+        req.setAttribute("queryUserName", queryName);
+        req.setAttribute("queryUserRole", queryUserRole);
+        req.setAttribute("totalPageCount", totalPageCount);
+        req.setAttribute("totalCount", totalCount);
+        req.setAttribute("currentPageNo", currentPageNo);
+
+        //转发:url不变
+        try {
+            req.getRequestDispatcher("userlist.jsp").forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

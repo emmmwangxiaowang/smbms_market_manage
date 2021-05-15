@@ -2,8 +2,11 @@ package com.wang.dao.user;
 
 import com.mysql.cj.util.StringUtils;
 import com.wang.dao.BaseDao;
+import com.wang.pojo.role;
 import com.wang.pojo.user;
 
+import javax.management.relation.Role;
+import javax.management.relation.RoleList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -115,6 +118,8 @@ public class UserDaoImpl implements UserDao {
         return count;
     }
 
+
+
     //根据条件查询用户列表
     public List<user> getUserList(Connection connection, String userName, int userRole, int currentPageNo, int pageSize) throws Exception {
         PreparedStatement pstm = null;
@@ -161,4 +166,5 @@ public class UserDaoImpl implements UserDao {
         }
         return userList;
     }
+
 }
