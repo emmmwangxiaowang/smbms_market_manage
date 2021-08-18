@@ -120,6 +120,7 @@ public class UserServlet extends HttpServlet {
     }
 
 
+    //查询用户数据
     //重点、难点
     private void query(HttpServletRequest req, HttpServletResponse resp) {
         //从请求中获取参数
@@ -135,11 +136,11 @@ public class UserServlet extends HttpServlet {
         int currentPageNo = 1;
 
         //打印输出获取到的参数
-        System.out.println("queryName -------->"+queryName);
+       /* System.out.println("queryName -------->"+queryName);
         System.out.println("queryUserRole -------->"+queryUserRole);
-        System.out.println("pageIndex ---------> " + pageIndex);
+        System.out.println("pageIndex ---------> " + pageIndex);*/
 
-        //判断是否传入指定用户名
+        //判断是否查询指定用户名
         if(queryName == null){
             //未传入则赋值为空字符串,避免查询报错
             queryName = "";

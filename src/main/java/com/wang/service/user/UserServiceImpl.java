@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         user user=null;
 
         connection= BaseDao.getConnection();
+        System.out.println(connection);
         user= userDao.getLoginUser(connection, userCode);
         if(!user.getUserPassword().equals(password)){
             return null;

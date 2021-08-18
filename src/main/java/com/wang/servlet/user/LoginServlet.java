@@ -4,6 +4,8 @@ import com.wang.pojo.user;
 import com.wang.service.user.UserService;
 import com.wang.service.user.UserServiceImpl;
 import com.wang.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,15 +19,18 @@ import java.io.IOException;
  * @since 2021/4/20 0020
  */
 public class LoginServlet extends HttpServlet {
-
+    private static final Logger logger= LoggerFactory.getLogger(LoginServlet.class);
     //Servlet:控制层,调用业务层代码
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("LoginServlet--start...");
+        logger.info("服务启动");
 
         //获取用户名和密码
         String userCode=req.getParameter("userCode");
+        logger.info("get userCode",userCode);
         String userPassword=req.getParameter("userPassword");
+        logger.info("getPass",userPassword);
 
         //和数据库中的密码进行对比,调用业务层
         UserService userService=new UserServiceImpl();
